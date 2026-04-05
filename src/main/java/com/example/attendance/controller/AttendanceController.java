@@ -10,10 +10,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 import com.example.attendance.entity.Attendance;
 import com.example.attendance.repository.AttendanceRepository;
 
+@CrossOrigin(origins = "*") // テスト用。公開用は制限する
 @RestController
 @RequestMapping("/api/attendances")
 public class AttendanceController {
@@ -61,4 +63,4 @@ public class AttendanceController {
     public List<Attendance> findAll() {
         return repository.findAll();
     }
-}
+}Getttttt
