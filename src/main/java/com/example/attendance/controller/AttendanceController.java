@@ -21,18 +21,21 @@ public class AttendanceController {
     @Autowired
     private AttendanceRepository repository;
 
+    private static final ZoneId JST = ZoneId.of("Asia/Tokyo");
+
     // 出勤
     @PostMapping("/checkin")
     public Attendance checkin() {
 
-    	// 今日の日付を日本時間で取得
-    	LocalDate today = LocalDate.now(ZoneId.of("Asia/Tokyo"));
+        // 今日の日付を日本時間で取得
+        LocalDate today = LocalDate.now(JST);
 
+        // 今日のレコードがあれば取得、なければ新規作成
         Attendance a = repository.findByDate(today)
                 .orElseGet(Attendance::new);
 
         a.setDate(today);
-        a.setCheckIn(LocalDateTime.now(ZoneId.of("Asia/Tokyo")));
+        a.setCheckIn(LocalDateTime.now(JST));
 
         return repository.save(a);
     }
@@ -41,17 +44,19 @@ public class AttendanceController {
     @PostMapping("/checkout")
     public Attendance checkout() {
 
-        LocalDate today = LocalDate.now();
+        // 今日の日付を日本時間で取得
+        LocalDate today = LocalDate.now(JST);
 
+        // 出勤していない場合はエラー
         Attendance a = repository.findByDate(today)
-                .orElseThrow(); // 出勤してない場合エラー
+                .orElseThrow(() -> new RuntimeException("本日の出勤記録が存在しません"));
 
-        a.setCheckOut(LocalDateTime.now());
+        a.setCheckOut(LocalDateTime.now(JST));
 
         return repository.save(a);
     }
 
-    // ★追加：全レコード取得
+    // 全レコード取得
     @GetMapping
     public List<Attendance> findAll() {
         return repository.findAll();
