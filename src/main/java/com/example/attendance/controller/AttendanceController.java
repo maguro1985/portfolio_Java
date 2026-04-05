@@ -2,8 +2,10 @@ package com.example.attendance.controller;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -45,5 +47,11 @@ public class AttendanceController {
         a.setCheckOut(LocalDateTime.now());
 
         return repository.save(a);
+    }
+
+    // ★追加：全レコード取得
+    @GetMapping
+    public List<Attendance> findAll() {
+        return repository.findAll();
     }
 }
