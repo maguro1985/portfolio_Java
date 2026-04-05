@@ -6,11 +6,11 @@ import java.time.ZoneId;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.CrossOrigin;
 
 import com.example.attendance.entity.Attendance;
 import com.example.attendance.repository.AttendanceRepository;
@@ -63,4 +63,4 @@ public class AttendanceController {
     public List<Attendance> findAll() {
         return repository.findAll();
     }
-}Getttttt
+}
